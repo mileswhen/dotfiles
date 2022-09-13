@@ -1,0 +1,5 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhistcnt =3
+let g:netrw_dirhist_3='/Users/mileshenderson/SANSA/resources/homo_sapiens_p2go'
+let g:netrw_dirhist_2='/usr/local/Cellar/hadoop/3.3.0/libexec/etc/hadoop'
+let g:netrw_dirhist_1='/usr/local/Cellar/hadoop/3.3.0'
