@@ -6,25 +6,12 @@ set encoding=utf8
 set mouse=a
 set foldmethod=marker
 set clipboard^=unnamed,unnamedplus "sync system and unamed clipboards
-autocmd FileType cpp setlocal cinoptions+=L0 "disable automatic label dedent
 set expandtab "autoexpand tabs to spaces
 syntax on
 set number relativenumber
 set cursorline
 "}}}
 "
-"{{{ Colors and aesthetics
-"onedark
-if (has("autocmd"))
-  augroup colorextend
-    autocmd!
-    " Make comment gray lighter 
-    autocmd ColorScheme * call onedark#extend_highlight("Comment", { "fg":{"gui": "#848d9c"}})
-  augroup END
-endif
-
-colorscheme onedark
-"}}}
 
 "{{{ Plugins
 call plug#begin('~/.config/nvim/plugged') 
@@ -40,6 +27,19 @@ Plug 'ms-jpq/coq_nvim', {'branch': 'coq'} "completion engine
 Plug 'ms-jpq/coq.artifacts', {'branch': 'artifacts'} "snippets
 Plug 'folke/trouble.nvim' "diagnostics
 call plug#end()
+"}}}
+
+"{{{ Colors and aesthetics
+"onedark
+if (has("autocmd"))
+  augroup colorextend
+    autocmd!
+    " Make comment gray lighter 
+    autocmd ColorScheme * call onedark#extend_highlight("Comment", { "fg":{"gui": "#848d9c"}})
+  augroup END
+endif
+
+colorscheme onedark
 "}}}
 
 "{{{ LSP config for completion
