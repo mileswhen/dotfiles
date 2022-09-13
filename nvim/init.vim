@@ -12,6 +12,19 @@ syntax on
 set number relativenumber
 set cursorline
 "}}}
+"
+"{{{ Colors and aesthetics
+"onedark
+if (has("autocmd"))
+  augroup colorextend
+    autocmd!
+    " Make comment gray lighter 
+    autocmd ColorScheme * call onedark#extend_highlight("Comment", { "fg":{"gui": "#848d9c"}})
+  augroup END
+endif
+
+colorscheme onedark
+"}}}
 
 "{{{ Plugins
 call plug#begin('~/.config/nvim/plugged') 
@@ -72,19 +85,6 @@ require'trouble'.setup{
 EOF
 "}}}
 
-"{{{ Colors and aesthetics
-"onedark
-if (has("autocmd"))
-  augroup colorextend
-    autocmd!
-    " Make comment gray lighter 
-    autocmd ColorScheme * call onedark#extend_highlight("Comment", { "fg":{"gui": "#848d9c"}})
-  augroup END
-endif
-
-colorscheme onedark
-"}}}
-
 "{{{ Nvim tree
 lua << EOF
 require("nvim-tree").setup({
@@ -98,105 +98,26 @@ require("nvim-tree").setup({
 EOF
 "}}}
 
-"{{{ Start screen
-"{{{2 Startify
-""center header
-"let g:startify_custom_header =
-"  \ 'startify#center(startify#fortune#cowsay())'
-"
-"highlight StartifyHeader guifg=#d19a66
-"
-"let g:startify_lists = [
-"  \ { 'type': 'commands',  'header': ['   Commands']       },
-"  \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },
-"  \ { 'type': 'files',     'header': ['   Recent']         },
-"  "\ { 'type': 'dir',       'header': ['   MRU '. getcwd()] },
-"  "\ { 'type': 'sessions',  'header': ['   Sessions']       },
-"  \ ]
-"
-"let g:startify_bookmarks = [
-"  \ '~/Library/Mobile\ Documents/com~apple~CloudDocs/Notes', 
-"  \ '~/Documents/Classes',
-"  \ ]
-"
-"let g:startify_commands = [
-"  \ ['New journal entry', 'call JournalEntry()'],
-"  \ ]
-"
-"let g:startify_custom_header_quotes =
-"      \ startify#fortune#predefined_quotes() + [['quote 1', 'quote 2']]
-"}}}2
-"}}}
-
 "{{{ Mappings
 "leader
 let mapleader = ";"
-
 "comments out code in visual mode
 vnoremap <leader>h :norm i# <CR>
-
 "nvimtree
 nmap <silent> <C-t> :NvimTreeToggle<CR>
-
 "markdown 
 nmap <C-p> <Plug>MarkdownPreviewToggle
 command Md2pdf !pandoc -s -o %:r.pdf %
 map md2pdf :Md2pdf
-
 "split-pane navigation
 nmap <C-h> <C-w>h
 nmap <C-j> <C-w>j
 nmap <C-k> <C-w>k
 nmap <C-l> <C-w>l
-
 "compile and run C++
 command Clang !clang++ % -o %:r
 command ClangRun !clang++ % -o %:r && ./%:r
 nnoremap cppr :ClangRun
 command Gpprun !g++ -std=c++11 % -o %:r && ./%:r
 nnoremap gppr :Gpprun
-
-"{{{2 Code completion (COC)
-
-"Use tab for trigger completion with characters ahead and navigate.
-" Use command ':verbose imap <tab>' to make sure tab is not mapped by another plugin.
-"inoremap <silent><expr> <TAB>
-"inoremap <silent><expr> <TAB>
-"      \ pumvisible() ? "\<C-n>" :
-"      \ <SID>check_back_space() ? "\<TAB>" :
-"      \ coc#refresh()
-"inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-"
-"" Used in the tab autocompletion for coc
-"function! s:check_back_space() abort
-"  let col = col('.') - 1
-"  return !col || getline('.')[col - 1]  =~# '\s'
-"endfunction
-"
-"" expand coc-snippet
-"imap <C-l> <Plug>(coc-snippets-expand)
-"
-"" Highlight the symbol and its references when holding the cursor.
-"autocmd CursorHold * silent call CocActionAsync('highlight')
-"
-"" Use K to show documentation in preview window.
-"nnoremap <silent> K :call ShowDocumentation()<CR>
-"
-"function! ShowDocumentation()
-"  if CocAction('hasProvider', 'hover')
-"    call CocActionAsync('doHover')
-"  else
-"    call feedkeys('K', 'in')
-"  endif
-"endfunction
-"}}}2
-"}}}
-
-"{{{ Functions
-
-"create file in notes directory
-function JournalEntry()
-  execute "e " . "~/Library/Mobile Documents/com~apple~CloudDocs/Notes/" . strftime("%Y%m%d") . ".md"
-endfunction
-"}}}
 
